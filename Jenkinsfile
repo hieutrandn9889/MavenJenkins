@@ -1,20 +1,11 @@
-pipeline {
-    agent any
-    stages {
-        stage('---clean---') {
-            steps {
-                sh "mvn clean"
-            }
+node {
+        stage('---check out---') {
+            sh "sudo rm -rf MavenJenkins"
+            git 'https://github.com/hieutrandn9889/MavenJenkins'
         }
         stage('--test--') {
-            steps {
-                sh "mvn test"
-            }
+            def mvnHome = tool name: 'maven 3.5.4', type: 'maven'
+            sh "$mvnHome/bin/mvn clean"
         }
-        stage('--package--') {
-            steps {
-                sh "mvn package"
-            }
-        }
-    }
+       
 }
